@@ -19,3 +19,5 @@
 - 🌱 Learning all about **Open Source**
 - 💬 Ping me about **design**, **branding**, **vue.js**, **development**, **design thinking**
 - ⚡️ Fun fact: I'm a huge fan of One Piece
+
+<p align="center"> <img src="https://github-readme-stats.vercel.app/api?username=GbrFrn&show_icons=true&theme=gotham" alt="abhisheknaiidu" />
