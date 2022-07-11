@@ -9,7 +9,7 @@
 
 ##### BIO
 
-- 🏢 I'm currently working at **RT Ireland**
+- 🏢 I'm currently working for **BT Ireland**
 - ⚙️ I use daily: `.ts`, `.js`, `.vue`, `.css`, `figma`, `.psd`.
 - 🌍 I'm mostly active within the **Vue.js community**
 - 💅 Designed and implemented: [@fvgcirurgiaplastica](https://instagram.com/fvgcirurgiaplastica) [FVG Cirurgia Plástica](https://www.fvgcirurgiaplastica.com.br)
