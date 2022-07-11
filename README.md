@@ -6,6 +6,9 @@
 
 - ✨ Designed and Coded [RagnaTales](https://ragnatales.com.br) front-end;
 - ✨ Currently designing and implementing [RagnaTales Season 2](https://www.figma.com/proto/YYMPpHkgtk1J9Pd9S1DHnk/RagnaTalves-Season-II?node-id=1%3A16&starting-point-node-id=1%3A16)
+- ✨ Working allocated in [Pragmatic Play](https://pragmaticplay.com) for BT Ireland.
+
+
 
 ##### BIO
 
