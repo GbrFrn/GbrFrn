@@ -1,16 +1,18 @@
 ### Hi there 👋
 
-<!--
-**GbrFrn/GbrFrn** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+#### I'm a Front-end Developer working in Belo Horizonte, Brazil
 
-Here are some ideas to get you started:
+##### NOW
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- ✨ Designed and Coded [RagnaTales](https://ragnatales.com.br) frontend;
+- ✨ Currently designing and implementing [RagnaTales Season 2](https://www.figma.com/proto/YYMPpHkgtk1J9Pd9S1DHnk/RagnaTalves-Season-II?node-id=1%3A16&starting-point-node-id=1%3A16)
+
+##### BIO
+
+- 🏢 I'm currently working at **RT Ireland**
+- ⚙️ I use daily: `.ts`, `.js`, `.vue`, `.css`, `figma`, `.psd`.
+- 🌍 I'm mostly active within the **Vue.js community**
+- 💅 Designed and implemented: [@fvgcirurgiaplastica](https://instagram.com/fvgcirurgiaplastica) [FVG Cirurgia Plástica](https://www.fvgcirurgiaplastica.com.br)
+- 🌱 Learning all about **Open Source**
+- 💬 Ping me about **design**, **branding**, **vue.js**, **development**, **design thinking**
+- ⚡️ Fun fact: I'm a huge fan of One Piece
