@@ -1,6 +1,6 @@
 ### Hi there 👋
 
-#### I'm a Front-end Developer working in Belo Horizonte, Brazil
+#### I'm a Front-end Developer from Belo Horizonte, Brazil
 
 ##### NOW
 
