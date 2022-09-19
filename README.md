@@ -17,7 +17,7 @@
 - 🌍 I'm mostly active within the **Vue.js community**
 - 💅 Designed and implemented: [@fvgcirurgiaplastica](https://instagram.com/fvgcirurgiaplastica) [FVG Cirurgia Plástica](https://www.fvgcirurgiaplastica.com.br)
 - 🌱 Learning about **Nuxt3, Pinia and TDD with Vitest**
-- 💬 Ping me about **design**, **branding**, **vue**, **design thinking**
+- 💬 Ping me about **UX**, **TDD**, **vue**, **design thinking**
 - ⚡️ Fun fact: I'm a huge fan of One Piece
 
 <p align="center"> <img src="https://github-readme-stats.vercel.app/api?username=GbrFrn&show_icons=true&theme=gotham&count_private=true" alt="abhisheknaiidu" />
