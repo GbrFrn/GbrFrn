@@ -16,7 +16,7 @@
 - ⚙️ I use daily: `.ts`, `.js`, `.vue`, `.css`, `figma`, `.psd`.
 - 🌍 I'm mostly active within the **Vue.js community**
 - 💅 Designed and implemented: [@fvgcirurgiaplastica](https://instagram.com/fvgcirurgiaplastica) [FVG Cirurgia Plástica](https://www.fvgcirurgiaplastica.com.br)
-- 🌱 Learning all about **Nuxt3, Pinia and TDD with Vitest**
+- 🌱 Learning about **Nuxt3, Pinia and TDD with Vitest**
 - 💬 Ping me about **design**, **branding**, **vue.js**, **development**, **design thinking**
 - ⚡️ Fun fact: I'm a huge fan of One Piece
 
