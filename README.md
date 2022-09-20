@@ -20,4 +20,6 @@
 - 💬 Ping me about **UX**, **TDD**, **vue**, **design thinking**
 - ⚡️ Fun fact: I'm a huge fan of One Piece
 
-<p align="center"> <img src="https://github-readme-stats.vercel.app/api?username=GbrFrn&show_icons=true&theme=gotham&count_private=true" alt="abhisheknaiidu" />
+<p align="center"> <img src="https://github-readme-stats.vercel.app/api?username=GbrFrn&show_icons=true&theme=tokyonight&count_private=true" alt="abhisheknaiidu" />
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=gbrfrn" alt="abhisheknaiidu" />
+</p>
