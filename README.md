@@ -6,8 +6,6 @@
 
 - ✨ Designed and Coded [RagnaTales](https://ragnatales.com.br) front-end;
 - ✨ Currently designing and implementing [RagnaTales Season 2](https://www.figma.com/proto/YYMPpHkgtk1J9Pd9S1DHnk/RagnaTalves-Season-II?node-id=1%3A16&starting-point-node-id=1%3A16)
-- [![wakatime](https://wakatime.com/badge/user/5cb38eb4-9a25-4ddf-b55a-1899f9c3da1e/project/b2cb407c-5351-4eae-8512-d67e1856e1b6.svg)](https://wakatime.com/badge/user/5cb38eb4-9a25-4ddf-b55a-1899f9c3da1e/project/b2cb407c-5351-4eae-8512-d67e1856e1b6)
-
 
 ##### BIO
 
