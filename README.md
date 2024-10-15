@@ -1,6 +1,6 @@
 ### Hello World! 🌍
 
-#### I'm a Data Analyst and Game Publisher from Belo Horizonte, Brazil
+#### I'm a Data Analyst and Game Dev from Belo Horizonte, Brazil
 
 ##### CURRENTLY
 
