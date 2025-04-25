@@ -16,7 +16,5 @@
 - 💬 Let’s chat about **data-driven decision making**, **Python**, **Vue.js**, **game development**.
 - ⚡️ Fun fact: Beyond the keyboard, I’m a huge fan of **One Piece** and love crafting immersive game experiences.
 
-<p align="center"> 
-  <img src="https://github-readme-stats.vercel.app/api?username=GbrFrn&show_icons=true&theme=tokyonight&count_private=true" alt="GbrFrn's GitHub Stats" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=gbrfrn" alt="GbrFrn's Top Languages" />
-</p>
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=gbrfrn&layout=pie)](https://github.com/anuraghazra/github-readme-stats)
+
