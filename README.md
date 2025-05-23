@@ -15,6 +15,3 @@
 - 🌱 Always learning: **Nuxt3**, **Pinia**, **TDD with Vitest**, and diving deeper into **advanced analytics**.
 - 💬 Let’s chat about **data-driven decision making**, **Python**, **Vue.js**, **game development**.
 - ⚡️ Fun fact: Beyond the keyboard, I’m a huge fan of **One Piece** and love crafting immersive game experiences.
-
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=gbrfrn&layout=pie)](https://github.com/anuraghazra/github-readme-stats)
-
