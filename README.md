@@ -1,1 +1,1 @@
-## Data Analyst @Leafwell & Data Lead @ Tales Inc.
+## Data Analyst @Leafwell
