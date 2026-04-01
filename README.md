@@ -8,7 +8,6 @@ analytics engineer · 10+ years · product · growth · governance
 > governance pipelines, experimentation frameworks, and executive insights.  
 > Track record of building from scratch and scaling what matters.
 
-<br>
 
 ## now
 
@@ -19,7 +18,6 @@ Product analytics across the full lifecycle — acquisition, funnel, retention,
 revenue, and experimentation. Metric standards, BI governance, and ETL pipelines
 as the authoritative source of truth across reporting surfaces.
 
-<br>
 
 ## before
 
@@ -35,7 +33,6 @@ DAU  ████████████████████  +500%
 COM  ████████████████████  21k+ members
 ```
 
-<br>
 
 ## stack
 
@@ -60,7 +57,6 @@ Atlan · Metadata Pipelines · Stewardship Workflows · BI Logic Normalization
 **when needed**  
 Vue · TypeScript · Tailwind
 
-<br>
 
 ---
 
