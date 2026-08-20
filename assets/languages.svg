@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="356" viewBox="0 0 680 356" role="img" aria-labelledby="title desc">
+  <title id="title">Authored code changes by language</title>
+  <desc id="desc">Programming language chart calculated from authored commits and external pull requests. Documentation, vendor, generated, lock, and asset files are ignored.</desc>
+  <style>
+    .bg { fill: #ffffff; }
+    .title { fill: #24292f; font: 600 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .label { fill: #24292f; font: 500 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .value { fill: #24292f; font: 600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .muted { fill: #6e7781; font: 400 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    .right { text-anchor: end; }
+    .border { stroke: #d0d7de; }
+    @media (prefers-color-scheme: dark) {
+      .bg { fill: #0d1117; }
+      .title, .label, .value { fill: #e6edf3; }
+      .muted { fill: #8b949e; }
+      .border { stroke: #30363d; }
+    }
+  </style>
+  <rect class="bg border" x="0.5" y="0.5" width="679" height="355" rx="6" />
+  <text class="title" x="20" y="31">Authored code changes</text>
+  <text class="muted" x="20" y="52">commits + external PRs - docs/vendor/generated ignored - generated 2026-06-29</text>
+  <rect x="20" y="66" width="303" height="14" rx="3" fill="#0298c3"><title>Perl: 230,457 changed lines</title></rect>
+  <rect x="323" y="66" width="150" height="14" rx="3" fill="#3572A5"><title>Python: 114,274 changed lines</title></rect>
+  <rect x="473" y="66" width="53" height="14" rx="3" fill="#3178c6"><title>TypeScript: 40,102 changed lines</title></rect>
+  <rect x="526" y="66" width="47" height="14" rx="3" fill="#555555"><title>C: 35,594 changed lines</title></rect>
+  <rect x="573" y="66" width="17" height="14" rx="3" fill="#f1e05a"><title>JavaScript: 13,173 changed lines</title></rect>
+  <rect x="590" y="66" width="13" height="14" rx="3" fill="#f34b7d"><title>C++: 9,599 changed lines</title></rect>
+  <rect x="603" y="66" width="12" height="14" rx="3" fill="#663399"><title>CSS: 9,459 changed lines</title></rect>
+  <rect x="615" y="66" width="10" height="14" rx="3" fill="#6E4C13"><title>Assembly: 7,960 changed lines</title></rect>
+  <rect x="625" y="66" width="35" height="14" rx="3" fill="#8c959f"><title>Other: 26,331 changed lines</title></rect>
+  <circle cx="22" cy="91" r="5" fill="#0298c3" />
+  <text class="label" x="38" y="95">Perl</text>
+  <text class="value" x="470" y="95">47.3%</text>
+  <text class="muted right" x="646" y="95">230,457 lines</text>
+  <circle cx="22" cy="119" r="5" fill="#3572A5" />
+  <text class="label" x="38" y="123">Python</text>
+  <text class="value" x="470" y="123">23.5%</text>
+  <text class="muted right" x="646" y="123">114,274 lines</text>
+  <circle cx="22" cy="147" r="5" fill="#3178c6" />
+  <text class="label" x="38" y="151">TypeScript</text>
+  <text class="value" x="470" y="151">8.2%</text>
+  <text class="muted right" x="646" y="151">40,102 lines</text>
+  <circle cx="22" cy="175" r="5" fill="#555555" />
+  <text class="label" x="38" y="179">C</text>
+  <text class="value" x="470" y="179">7.3%</text>
+  <text class="muted right" x="646" y="179">35,594 lines</text>
+  <circle cx="22" cy="203" r="5" fill="#f1e05a" />
+  <text class="label" x="38" y="207">JavaScript</text>
+  <text class="value" x="470" y="207">2.7%</text>
+  <text class="muted right" x="646" y="207">13,173 lines</text>
+  <circle cx="22" cy="231" r="5" fill="#f34b7d" />
+  <text class="label" x="38" y="235">C++</text>
+  <text class="value" x="470" y="235">2.0%</text>
+  <text class="muted right" x="646" y="235">9,599 lines</text>
+  <circle cx="22" cy="259" r="5" fill="#663399" />
+  <text class="label" x="38" y="263">CSS</text>
+  <text class="value" x="470" y="263">1.9%</text>
+  <text class="muted right" x="646" y="263">9,459 lines</text>
+  <circle cx="22" cy="287" r="5" fill="#6E4C13" />
+  <text class="label" x="38" y="291">Assembly</text>
+  <text class="value" x="470" y="291">1.6%</text>
+  <text class="muted right" x="646" y="291">7,960 lines</text>
+  <circle cx="22" cy="315" r="5" fill="#8c959f" />
+  <text class="label" x="38" y="319">Other</text>
+  <text class="value" x="470" y="319">5.4%</text>
+  <text class="muted right" x="646" y="319">26,331 lines</text>
+</svg>
