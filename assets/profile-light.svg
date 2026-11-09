@@ -62,7 +62,7 @@ text{font-family:'Archivo','Helvetica Neue',Arial,sans-serif;font-variant-numeri
 <text class="s" x="748" y="568" fill="#5c5c5c">Nov</text>
 <rect x="44" y="546" width="752" height="1" fill="#111111"/>
 <rect x="44" y="608" width="752" height="1" fill="#111111"/>
-<text class="h" x="44" y="638" fill="#111111">Code I wrote, by language</text>
+<text class="h" x="44" y="638" fill="#111111">Code shipped, by language</text>
 <text class="l" x="44" y="672" fill="#111111">Python</text>
 <rect x="236" y="659" width="432" height="14" fill="#e30613"><title>411,588 lines</title></rect>
 <text class="l r" x="796" y="672" fill="#111111">79.8%</text>
@@ -91,6 +91,6 @@ text{font-family:'Archivo','Helvetica Neue',Arial,sans-serif;font-variant-numeri
 <rect x="236" y="915" width="4" height="14" fill="#111111"><title>4,038 lines</title></rect>
 <text class="l r" x="796" y="928" fill="#111111">0.8%</text>
 <rect x="44" y="976" width="752" height="1" fill="#d4d4d4"/>
-<text class="f" x="44" y="1004" fill="#5c5c5c">Lines changed in my own commits and PRs; docs, vendored code, imports excluded</text>
+<text class="f" x="44" y="1004" fill="#5c5c5c">Lines changed in commits and PRs I authored, including agent-assisted work; docs, vendored code, imports excluded</text>
 <text class="f" x="44" y="1026" fill="#5c5c5c">GitHub data 2026-11-09 · code data 2026-11-09</text>
 </svg>

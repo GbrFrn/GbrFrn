@@ -156,7 +156,7 @@ def render(theme: dict[str, str], data: dict) -> str:
     # Languages: name cols 1-3, bar cols 4-10, share cols 11-12.
     top = base + 62
     add(f'<rect x="{x(1)}" y="{top}" width="{span(12)}" height="1" fill="{t["ink"]}"/>')
-    add(f'<text class="h" x="{x(1)}" y="{top + 30}" fill="{t["ink"]}">Code I wrote, by language</text>')
+    add(f'<text class="h" x="{x(1)}" y="{top + 30}" fill="{t["ink"]}">Code shipped, by language</text>')
     row = top + 64
     languages = data["languages"]
     widest = max((lang["percent"] for lang in languages), default=0) or 1
@@ -173,7 +173,7 @@ def render(theme: dict[str, str], data: dict) -> str:
     # Footer: method on the left, the as-of dates locked to the right corner.
     foot = row + max(len(languages), 1) * 32 + 16
     add(f'<rect x="{x(1)}" y="{foot}" width="{span(12)}" height="1" fill="{t["rule"]}"/>')
-    add(f'<text class="f" x="{x(1)}" y="{foot + 28}" fill="{t["soft"]}">Lines changed in my own commits and PRs; docs, vendored code, imports excluded</text>')
+    add(f'<text class="f" x="{x(1)}" y="{foot + 28}" fill="{t["soft"]}">Lines changed in commits and PRs I authored, including agent-assisted work; docs, vendored code, imports excluded</text>')
     add(f'<text class="f" x="{x(1)}" y="{foot + 50}" fill="{t["soft"]}">GitHub data {data["github_date"]} · code data {data["code_date"]}</text>')
     height = foot + 78
 
