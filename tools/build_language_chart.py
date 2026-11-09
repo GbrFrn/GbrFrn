@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
-"""Build the profile language chart from authored GitHub changes.
+"""Measure authored code from local clones and write assets/code-stats.json.
 
-The chart intentionally uses changed lines from authored commits and external
-pull requests instead of repository-wide language bytes. That makes the profile
-show languages the account actively worked in, while avoiding private repo names
-in the public README.
+Languages use changed lines from authored commits and external pull requests
+instead of repository-wide language bytes, so the profile shows languages the
+account actively worked in. Private repos need local clones, so this runs on a
+workstation; tools/render_profile.py turns the JSON into the profile SVGs and
+also runs in CI. No repo names are written out.
+
+Run: GITHUB_LOCAL_REPO_ROOT=~ GITHUB_LANG_OWNERS=GbrFrn,PlanetaryStudios \
+     GITHUB_LANG_EXCLUDE=<forks> python3 tools/build_language_chart.py
 """
 
 from __future__ import annotations
 
 import datetime as dt
-import html
 import json
 import os
 import re
@@ -21,7 +24,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-ASSET_PATH = ROOT / "assets" / "languages.svg"
+STATS_PATH = ROOT / "assets" / "code-stats.json"
 LOGIN = os.environ.get("GITHUB_LOGIN", "GbrFrn")
 # Owners whose repos count (comma-separated): the login plus any orgs.
 OWNERS = [
@@ -63,26 +66,6 @@ AUTHOR_PATTERNS = [
     ).split(",")
     if pattern.strip()
 ]
-
-LANGUAGE_COLORS = {
-    "Assembly": "#6E4C13",
-    "C": "#555555",
-    "C#": "#178600",
-    "C++": "#f34b7d",
-    "CSS": "#663399",
-    "HTML": "#e34c26",
-    "Java": "#b07219",
-    "JavaScript": "#f1e05a",
-    "Perl": "#0298c3",
-    "PHP": "#4F5D95",
-    "Python": "#3572A5",
-    "R": "#198CE7",
-    "Rust": "#dea584",
-    "Shell": "#89e051",
-    "SQL": "#336790",
-    "TypeScript": "#3178c6",
-    "Vue": "#41b883",
-}
 
 LANGUAGE_BY_EXTENSION = {
     ".c": "C",
@@ -375,6 +358,12 @@ def author_matches(name: str, email: str) -> bool:
     return any(pattern in identity for pattern in AUTHOR_PATTERNS)
 
 
+# A repo that absorbed another's history (or a mirror) shares commit SHAs;
+# count each commit once across every clone.
+SEEN_COMMITS: set[str] = set()
+AUTHORED_COMMITS = 0
+
+
 def authored_local_changes(repo: Path) -> list[dict[str, object]]:
     args = [
         "log",
@@ -405,7 +394,16 @@ def authored_local_changes(repo: Path) -> list[dict[str, object]]:
         if line.startswith("@@commit\t"):
             flush()
             parts = line.split("\t")
-            include_commit = len(parts) >= 4 and author_matches(parts[2], parts[3])
+            include_commit = (
+                len(parts) >= 4
+                and parts[1] not in SEEN_COMMITS
+                and author_matches(parts[2], parts[3])
+            )
+            if len(parts) >= 2:
+                SEEN_COMMITS.add(parts[1])
+            if include_commit:
+                global AUTHORED_COMMITS
+                AUTHORED_COMMITS += 1
             continue
 
         if not include_commit or not line.strip():
@@ -427,6 +425,9 @@ def authored_local_changes(repo: Path) -> list[dict[str, object]]:
 
     flush()
     return files
+
+
+MERGED_PR_REPOS: Counter[str] = Counter()
 
 
 def external_pull_request_files() -> list[dict[str, object]]:
@@ -459,6 +460,8 @@ def external_pull_request_files() -> list[dict[str, object]]:
         number = pr.get("number")
         if not repo_name or not number:
             continue
+        if state == "merged":
+            MERGED_PR_REPOS[repo_name] += 1
 
         details = gh(
             [
@@ -494,79 +497,6 @@ def rounded_rows(counter: Counter[str]) -> list[tuple[str, int, float]]:
     return top
 
 
-def format_count(value: int) -> str:
-    return f"{value:,}"
-
-
-def bar_segments(rows: list[tuple[str, int, float]], x: int, y: int, width: int) -> str:
-    total_lines = sum(lines for _, lines, _ in rows)
-    cursor = x
-    parts: list[str] = []
-    for index, (language, lines, _) in enumerate(rows):
-        segment_width = round((lines / total_lines) * width) if total_lines else 0
-        if index == len(rows) - 1:
-            segment_width = x + width - cursor
-        if segment_width <= 0:
-            continue
-
-        color = LANGUAGE_COLORS.get(language, "#8c959f")
-        parts.append(
-            f'<rect x="{cursor}" y="{y}" width="{segment_width}" height="14" '
-            f'rx="3" fill="{color}"><title>{html.escape(language)}: '
-            f'{format_count(lines)} changed lines</title></rect>'
-        )
-        cursor += segment_width
-
-    return "\n  ".join(parts)
-
-
-def render_svg(counter: Counter[str]) -> str:
-    rows = rounded_rows(counter)
-    generated = dt.datetime.now(dt.timezone.utc).date().isoformat()
-    row_height = 28
-    height = 104 + (len(rows) * row_height)
-
-    legend = []
-    for index, (language, lines, percent) in enumerate(rows):
-        y = 86 + index * row_height
-        color = LANGUAGE_COLORS.get(language, "#8c959f")
-        label = html.escape(language)
-        legend.append(
-            f'<circle cx="22" cy="{y + 5}" r="5" fill="{color}" />\n'
-            f'  <text class="label" x="38" y="{y + 9}">{label}</text>\n'
-            f'  <text class="value" x="470" y="{y + 9}">{percent:.1f}%</text>\n'
-            f'  <text class="muted right" x="646" y="{y + 9}">'
-            f'{format_count(lines)} lines</text>'
-        )
-
-    legend_markup = "\n  ".join(legend)
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="680" height="{height}" viewBox="0 0 680 {height}" role="img" aria-labelledby="title desc">
-  <title id="title">Authored code changes by language</title>
-  <desc id="desc">Programming language chart calculated from authored commits and external pull requests. Documentation, vendor, generated, lock, and asset files are ignored.</desc>
-  <style>
-    .bg {{ fill: #ffffff; }}
-    .title {{ fill: #24292f; font: 600 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
-    .label {{ fill: #24292f; font: 500 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
-    .value {{ fill: #24292f; font: 600 13px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
-    .muted {{ fill: #6e7781; font: 400 12px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }}
-    .right {{ text-anchor: end; }}
-    .border {{ stroke: #d0d7de; }}
-    @media (prefers-color-scheme: dark) {{
-      .bg {{ fill: #0d1117; }}
-      .title, .label, .value {{ fill: #e6edf3; }}
-      .muted {{ fill: #8b949e; }}
-      .border {{ stroke: #30363d; }}
-    }}
-  </style>
-  <rect class="bg border" x="0.5" y="0.5" width="679" height="{height - 1}" rx="6" />
-  <text class="title" x="20" y="31">Authored code changes</text>
-  <text class="muted" x="20" y="52">commits + external PRs · docs, vendor, imports ignored · {generated}</text>
-  {bar_segments(rows, 20, 66, 640)}
-  {legend_markup}
-</svg>
-'''
-
-
 def main() -> int:
     counter: Counter[str] = Counter()
     owned_repos = repos_owned_by_login()
@@ -584,14 +514,24 @@ def main() -> int:
         print("No language data found.", file=sys.stderr)
         return 1
 
-    ASSET_PATH.parent.mkdir(exist_ok=True)
-    ASSET_PATH.write_text(render_svg(counter), encoding="utf-8")
+    stats = {
+        "generated": dt.datetime.now(dt.timezone.utc).date().isoformat(),
+        "authored_commits": AUTHORED_COMMITS,
+        "merged_prs": sum(MERGED_PR_REPOS.values()),
+        "merged_pr_repos": len(MERGED_PR_REPOS),
+        "languages": [
+            {"name": name, "lines": lines, "percent": round(percent, 1)}
+            for name, lines, percent in rounded_rows(counter)
+        ],
+    }
+    STATS_PATH.parent.mkdir(exist_ok=True)
+    STATS_PATH.write_text(json.dumps(stats, indent=2) + "\n", encoding="utf-8")
+    print(f"local repos: {len(set(local_repos.values()))}")
+    print(json.dumps(stats, indent=2))
 
-    print(f"local repos: {len(local_repos)}")
-    for language, lines, percent in rounded_rows(counter):
-        print(f"{language}\t{lines}\t{percent:.1f}%")
+    import render_profile  # same folder; redraw the SVGs with the new numbers
 
-    return 0
+    return render_profile.main()
 
 
 if __name__ == "__main__":

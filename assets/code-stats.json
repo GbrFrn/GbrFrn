@@ -1,0 +1,53 @@
+{
+  "generated": "2026-11-09",
+  "authored_commits": 2087,
+  "merged_prs": 14,
+  "merged_pr_repos": 6,
+  "languages": [
+    {
+      "name": "Python",
+      "lines": 411588,
+      "percent": 79.8
+    },
+    {
+      "name": "TypeScript",
+      "lines": 33030,
+      "percent": 6.4
+    },
+    {
+      "name": "JavaScript",
+      "lines": 29896,
+      "percent": 5.8
+    },
+    {
+      "name": "Rust",
+      "lines": 16616,
+      "percent": 3.2
+    },
+    {
+      "name": "HTML",
+      "lines": 8955,
+      "percent": 1.7
+    },
+    {
+      "name": "C",
+      "lines": 4131,
+      "percent": 0.8
+    },
+    {
+      "name": "C#",
+      "lines": 3982,
+      "percent": 0.8
+    },
+    {
+      "name": "Shell",
+      "lines": 3725,
+      "percent": 0.7
+    },
+    {
+      "name": "Other",
+      "lines": 4038,
+      "percent": 0.8
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+name: Profile stats
+
+# Redraws the profile SVGs with live GitHub data. Uses only the workflow's own
+# short-lived token; language and commit figures come from assets/code-stats.json,
+# refreshed on a workstation by tools/build_language_chart.py.
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/render_profile.py
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Commit if changed
+        run: |
+          git diff --quiet && exit 0
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -qam "Refresh profile stats"
+          git push
