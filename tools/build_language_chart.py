@@ -23,13 +23,43 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ASSET_PATH = ROOT / "assets" / "languages.svg"
 LOGIN = os.environ.get("GITHUB_LOGIN", "GbrFrn")
+# Owners whose repos count (comma-separated): the login plus any orgs.
+OWNERS = [
+    owner.strip()
+    for owner in os.environ.get("GITHUB_LANG_OWNERS", LOGIN).split(",")
+    if owner.strip()
+]
+# ponytail: commits above this many classified lines are imports or vendored
+# trees (an OpenKore seed was 360k), not authored work. Real commits peak ~11k.
+# Repo names to skip entirely, e.g. forks of someone else's project that
+# GitHub doesn't mark as forks. Env-only so private names stay out of this file.
+EXCLUDED_REPOS = {
+    name.strip().casefold()
+    for name in os.environ.get("GITHUB_LANG_EXCLUDE", "").split(",")
+    if name.strip()
+}
+MAX_COMMIT_LINES = int(os.environ.get("GITHUB_LANG_MAX_COMMIT_LINES", "20000"))
 LOCAL_REPO_ROOT = Path(os.environ.get("GITHUB_LOCAL_REPO_ROOT", ROOT.parent))
 SINCE = os.environ.get("GITHUB_LANG_SINCE", "")
+
+
+
+def _git_identity() -> str:
+    result = subprocess.run(
+        ["git", "config", "--global", "user.email"],
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+# Default: the login plus the local git email, so commits signed with a real
+# name instead of the login still count without the email living in this file.
 AUTHOR_PATTERNS = [
-    pattern.casefold()
+    pattern.strip().casefold()
     for pattern in os.environ.get(
         "GITHUB_LANG_AUTHORS",
-        "GbrFrn",
+        f"{LOGIN},{_git_identity()}",
     ).split(",")
     if pattern.strip()
 ]
@@ -156,6 +186,7 @@ EXCLUDED_PATH_PARTS = {
 
 SCAN_PRUNE_DIRS = {
     ".cache",
+    ".claude",
     ".config",
     ".local",
     ".npm",
@@ -248,24 +279,28 @@ def add_file(counter: Counter[str], file_info: dict[str, object]) -> None:
 
 
 def repos_owned_by_login() -> list[dict[str, object]]:
-    repos = gh(
-        [
-            "repo",
-            "list",
-            LOGIN,
-            "--limit",
-            "200",
-            "--json",
-            "nameWithOwner,isFork,isArchived",
-        ]
-    )
-    if not isinstance(repos, list):
-        return []
+    repos: list[dict[str, object]] = []
+    for owner in OWNERS:
+        listed = gh(
+            [
+                "repo",
+                "list",
+                owner,
+                "--limit",
+                "200",
+                "--json",
+                "nameWithOwner,isFork,isArchived",
+            ]
+        )
+        if isinstance(listed, list):
+            repos.extend(listed)
 
     return [
         repo
         for repo in repos
-        if not repo.get("isFork") and not repo.get("isArchived")
+        if not repo.get("isFork")
+        and not repo.get("isArchived")
+        and str(repo["nameWithOwner"]).rsplit("/", 1)[-1].casefold() not in EXCLUDED_REPOS
     ]
 
 
@@ -358,8 +393,17 @@ def authored_local_changes(repo: Path) -> list[dict[str, object]]:
 
     include_commit = False
     files: list[dict[str, object]] = []
+    commit: list[dict[str, object]] = []
+
+    def flush() -> None:
+        counted = sum(changed_lines(f) for f in commit if classify(str(f["path"])))
+        if counted <= MAX_COMMIT_LINES:
+            files.extend(commit)
+        commit.clear()
+
     for line in output.splitlines():
         if line.startswith("@@commit\t"):
+            flush()
             parts = line.split("\t")
             include_commit = len(parts) >= 4 and author_matches(parts[2], parts[3])
             continue
@@ -373,7 +417,7 @@ def authored_local_changes(repo: Path) -> list[dict[str, object]]:
 
         additions, deletions, path = parts
         if additions.isdigit() and deletions.isdigit():
-            files.append(
+            commit.append(
                 {
                     "additions": int(additions),
                     "deletions": int(deletions),
@@ -381,6 +425,7 @@ def authored_local_changes(repo: Path) -> list[dict[str, object]]:
                 }
             )
 
+    flush()
     return files
 
 
@@ -408,7 +453,7 @@ def external_pull_request_files() -> list[dict[str, object]]:
 
         repo = pr.get("repository") or {}
         repo_name = str(repo.get("nameWithOwner") or "")
-        if repo_name.startswith(f"{LOGIN}/"):
+        if repo_name.split("/", 1)[0] in OWNERS:
             continue
 
         number = pr.get("number")
@@ -515,7 +560,7 @@ def render_svg(counter: Counter[str]) -> str:
   </style>
   <rect class="bg border" x="0.5" y="0.5" width="679" height="{height - 1}" rx="6" />
   <text class="title" x="20" y="31">Authored code changes</text>
-  <text class="muted" x="20" y="52">commits + external PRs - docs/vendor/generated ignored - generated {generated}</text>
+  <text class="muted" x="20" y="52">commits + external PRs · docs, vendor, imports ignored · {generated}</text>
   {bar_segments(rows, 20, 66, 640)}
   {legend_markup}
 </svg>
@@ -527,7 +572,8 @@ def main() -> int:
     owned_repos = repos_owned_by_login()
     local_repos = local_owned_repo_paths(owned_repos)
 
-    for _, repo_path in sorted(local_repos.items()):
+    # Two remotes (a rename) can point at one clone; count each clone once.
+    for repo_path in sorted(set(local_repos.values())):
         for file_info in authored_local_changes(repo_path):
             add_file(counter, file_info)
 
